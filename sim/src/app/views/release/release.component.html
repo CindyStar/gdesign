@@ -1,0 +1,45 @@
+<div class="release">
+  <form [formGroup]="validateForm" class="container">
+    <div class="release-body">
+      <nz-input-group nzCompact nzSize="large"
+        [ngClass]="['release-header',validateForm.get('atitle').error && validateForm.get('atitle').dirty ? 'error' :'success']">
+        <nz-input-group [nzSuffix]="titlesuffixTemplate" class="release-title">
+          <input type="text" nz-input formControlName="atitle" placeholder="请输入标题" />
+        </nz-input-group>
+        <ng-template #titlesuffixTemplate>
+          <i nz-icon nz-tooltip class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle"
+            *ngIf="validateForm.get('atitle').value" (click)="validateForm.get('atitle').setValue(null)"></i>
+        </ng-template>
+        <nz-select nzShowSearch nzAllowClear formControlName="aclass" nzSize="large" nzPlaceHolder="请选择分类"
+          class="release-class">
+          <nz-option *ngFor="let tips of tipsgroup; let i = index" [nzValue]="tips['_id']" [nzLabel]="tips['tname']">
+          </nz-option>
+          <nz-option nzCustomContent>
+            <div class="add-item" (click)="showModal()"><i nz-icon nzType="plus"></i> 新增分类</div>
+          </nz-option>
+        </nz-select>
+      </nz-input-group>
+    </div>
+    <!-- <div class="release-img">
+      <label for="avatar">添加头图</label>
+      <input type="file" hidden name="avatar" id="avatar">
+    </div> -->
+    <!-- <quill-editor></quill-editor> -->
+    <div class="detailmarkdown" id="detailmarkdown" #detailmarkdown>
+      <textarea style="display: none;"></textarea>
+    </div>
+    <div class="release-footer">
+      <label nz-checkbox formControlName="apublic">是否公开</label>
+      <button nz-button nzType="primary" nzSize="large" (click)="submitForm()">发表</button>
+    </div>
+  </form>
+</div>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="添加分类" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <nz-input-group [nzSuffix]="suffixTemplate" style="text-align: center">
+    分类名称：
+    <input type="text" nz-input [(ngModel)]="newTips" placeholder="请输入分类名称" class="newTips" />
+  </nz-input-group>
+  <ng-template #suffixTemplate><i nz-icon nz-tooltip class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle"
+      *ngIf="newTips" (click)="newTips = null"></i></ng-template>
+</nz-modal>

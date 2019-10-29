@@ -1,0 +1,20 @@
+<main class="container">
+  <div class="wrapper">
+    <app-pagelist [list]="pagelist"></app-pagelist>
+  </div>
+  <aside class="aside">
+    <a class="releasebtn" routerLink="/release">发布文章</a>
+    <div class="tipsgroup">
+      <div class="title">
+        标签
+        <a routerLink="/tipsgroup" class="more">查看更多 >> </a>
+      </div>
+      <div class="list">
+        <ng-container *ngFor="let tips of tipsgroup; let i = index">
+          <a [routerLink]="['/index',tips['_id']]"
+            [ngClass]=" {'active':type === tips['_id'],'item':true}">{{tips['tname']}}</a>
+        </ng-container>
+      </div>
+    </div>
+  </aside>
+</main>
