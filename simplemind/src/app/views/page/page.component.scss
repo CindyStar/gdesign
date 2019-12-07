@@ -1,0 +1,79 @@
+@import "../../../assets/style/_variable";
+
+.html,
+.body {
+  background-color: #f5f5f5;
+}
+
+
+.container {
+  width: $wrapper-width;
+  height: 100%;
+  margin: auto;
+}
+
+h1,
+p {
+  margin: 0;
+}
+
+.warpper {
+  padding: 20px;
+  overflow: auto;
+  background-color: #fff;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.page-info {
+  padding: 6px 10px;
+  margin-left: 20px;
+  color: #fff;
+  background-color: $brand;
+  opacity: .6;
+}
+
+.page-context {
+  line-height: 2;
+  color: #333;
+}
+
+.author-info {
+  float: right;
+  width: 260px;
+  padding: 20px;
+  margin-left: 20px;
+  background-color: #fff;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .name {
+    display: flex;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+
+    span {
+      margin-left: 20px;
+      cursor: pointer;
+
+      &:hover {
+        color: $brand;
+      }
+    }
+
+    .follow {
+      margin-left: auto;
+    }
+  }
+}

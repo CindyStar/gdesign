@@ -3,8 +3,10 @@ const mongoose = require('mongoose')
 
 //定义数据模型，可以看到，我们下面创建了一个表，
 const calltypeSchema = mongoose.Schema({
-    btypeval: Number, // 类型数值
-    btypename: String, // 类型名称
+    btypename: {
+        type: String,
+        require: true
+    }, // 类型名称
 }, {
     collection: 'calltype'
 })

@@ -1,0 +1,26 @@
+<header class="header">
+  <div class="container flex-center" >
+    <a class="logo" routerLink="/user/index"></a>
+    <nz-input-group [nzSuffix]="suffixIconSearch"   >
+      <input type="text" nz-input placeholder="请输入文章关键词搜索" [(ngModel)]="keyword" (ngModelChange)="searchPage()" (focus)="isSearch = false"/>
+      <div class="searchresult" [hidden]="isSearch">
+        <nz-spin [nzSpinning]="isLoading">
+          <nz-empty *ngIf="isEmpty"></nz-empty>
+          <ul *ngIf="!isEmpty">
+            <li (click)="topage(item._id)" *ngFor="let item of optionList" class="searchlist">{{item.atitle}}</li>
+          </ul>
+        </nz-spin>
+      </div>
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <i nz-icon nzType="search"></i>
+    </ng-template>
+    <div class="header-ctrl">
+      <a routerLink="/user/setting">
+        <nz-avatar nzIcon="user" [nzSrc]="global.user?(global.baseUrl + global.user.uavatar):''"></nz-avatar>
+        {{global.user?global.user.uname:'用户名'}}
+      </a>
+      <a (click)="global.logout()">退出</a>
+    </div>
+  </div>
+</header>

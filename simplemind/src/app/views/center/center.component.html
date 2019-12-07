@@ -1,0 +1,17 @@
+<div class="container center">
+  <div class="center-header">
+    <nz-avatar nzSize="large" nzIcon="user" [nzSrc]="global.baseUrl + user['uavatar']"></nz-avatar>
+    <span class="center-name"> {{user['uname']}}</span>
+  </div>
+  <div class="center-pagelist">
+    <ng-container *ngIf="pagelist.length === 0">
+      <nz-empty></nz-empty>
+    </ng-container>
+    <ng-container *ngIf="pagelist.length > 0">
+      <app-pagelist [list]="pagelist" [loading]="initLoading"></app-pagelist>
+      <div class="showmore" *ngIf="hasMore">
+        <button nz-button nzType="default" (click)="showMore()">查看更多</button>
+      </div>
+    </ng-container>
+  </div>
+</div>

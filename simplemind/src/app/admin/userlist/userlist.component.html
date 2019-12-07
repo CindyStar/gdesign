@@ -1,0 +1,49 @@
+<nz-table #editRowTable nzBordered [nzData]="userlist" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+  [nzLoading]="initLoading" [nzLoadingDelay]="300" (nzPageIndexChange)="showMore()">
+  <thead>
+    <tr>
+      <th nzAlign="center" nzWidth="80px">序号</th>
+      <th>头像</th>
+      <th>昵称</th>
+      <th>账号</th>
+      <th>手机号</th>
+      <th>权限</th>
+      <th>文章数量</th>
+      <th>注册时间</th>
+      <th nzAlign="center">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of editRowTable.data index as index" class="editable-row">
+      <td nzAlign="center">{{index+1}}</td>
+      <td>
+        <nz-avatar nzIcon="user" [nzSrc]="global.baseUrl + data.uavatar"></nz-avatar>
+      </td>
+      <td>{{data.uname}}</td>
+      <td>{{data.uaccount}}</td>
+      <td>{{data.uphone}}</td>
+      <td>{{data.Jurisdiction === 1?'管理员':'会员'}}</td>
+      <td>{{data.articles}}</td>
+      <td>{{data.utime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+      <td nzAlign="center">
+        <a (click)="showModal(data)">修改权限</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzTitle="Sure to delete?" (nzOnConfirm)="delete(data._id)">删除</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="权限修改" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <div class="flex-center">
+    <nz-input-group [nzSuffix]="suffixTemplate" style="text-align: center">
+      分类名称：
+      <nz-select nzPlaceHolder="请选择权限" [(ngModel)]="judId" style="width: 100px;">
+        <nz-option nzLabel="会员" [nzValue]="0"></nz-option>
+        <nz-option nzLabel="管理员" [nzValue]="1"></nz-option>
+      </nz-select>
+    </nz-input-group>
+    <ng-template #suffixTemplate><i nz-icon nz-tooltip class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle"
+        *ngIf="newTips" (click)="newTips = null"></i></ng-template>
+  </div>
+</nz-modal>

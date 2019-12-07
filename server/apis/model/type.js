@@ -3,7 +3,14 @@ const mongoose = require('mongoose')
 
 //定义数据模型，可以看到，我们下面创建了一个表，
 const typeSchema = mongoose.Schema({
-    tname: String, // 类型名称
+    tname: {
+        type: String,
+        require: true
+    },
+    tcolor: {
+        type: String,
+        default: '#666'
+    } // 类型名称
 }, {
     collection: 'type'
 })

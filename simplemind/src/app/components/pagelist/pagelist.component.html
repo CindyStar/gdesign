@@ -1,0 +1,26 @@
+<nz-skeleton [nzActive]="true" [nzLoading]="loading">
+  <ul class="pagelist">
+    <li class="pagelist-item" *ngFor="let item of list; let i = index">
+      <div class="pagelist-content" [routerLink]="['/user/page', item['_id']]">
+        <div class="page-header">
+          <a class="title">{{item['atitle']}}</a>
+          <!-- <a class="title" routerLink="/user/page">{{item['atitle']}}</a> -->
+          <ul class="info">
+            <li class="info-name" [routerLink]="['/user/center', item['uid']['_id']]">{{item['uid']['uname'] || '匿名'}}</li>
+            <li class="info-type" [ngStyle]="{'background-color':item['aclass']['tcolor']}">{{item['aclass']['tname']}}
+              <!-- <li>浏览量：{{item['abrowser']}}</li>
+        <li>收藏数：{{item['acollect']}}</li> -->
+          </ul>
+        </div>
+        <div class="content">{{item['abstract']}}</div>
+      </div>
+      <!-- <div *ngIf="item['avatar'] !== ''" class="pagelist-avatar"
+        [ngStyle]="{'background-image':'url('+global.baseUrl + item['avatar']')'}">
+      </div> -->
+      <div class="editPage" *ngIf="ctrl">
+        <a routerLink="/user/release" [queryParams]="{_id:item['_id']}">编辑</a>
+        <a (click)="delete(item['_id'])">删除</a>
+      </div>
+    </li>
+  </ul>
+</nz-skeleton>

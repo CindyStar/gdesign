@@ -8,14 +8,32 @@ const userSchema = mongoose.Schema({
         type: String,
         require: true
     }, // 用户密码
-    uaccount: String, // 用户账号
+    uaccount: {
+        type: String,
+        Unique: true,
+        require: true
+    }, // 用户账号
     uphone: {
         type: Number,
+        Unique: true,
         require: true
     }, // 用户手机号
-    uavatar: String, // 用户头像
-    utime: Date, // 用户创建时间
-    ustatus: Number // 用户当前状态
+    uavatar: {
+        type: String,
+        default: ''
+    }, // 用户头像
+    utime: {
+        type: Date,
+        default: Date.now
+    }, // 用户创建时间
+    Jurisdiction: {
+        type: Number,
+        default: 0
+    }, // 用户权限,0位普通用户,1为管理员
+    ustatus: {
+        type: Number,
+        default: 0
+    } // 用户当前状态
 }, {
     collection: 'user'
 })

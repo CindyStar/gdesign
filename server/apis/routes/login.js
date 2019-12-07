@@ -1,15 +1,18 @@
 //引入express模块
 const express = require("express");
+var bodyParser = require("body-parser");
+var jsonParser = bodyParser.json();
+var urlencodedParser = bodyParser.urlencoded({
+    extended: false
+});
 //定义路由级中间件
 const router = express.Router();
 
 // 通过account来对比密码
-router.get("/login", (req, res) => {
-    console.log(req);
-});
-// 通过account来对比密码
-router.post("/login", (req, res) => {
-    console.log(req);
+router.post("/login", urlencodedParser,(req, res) => {
+    console.log(req.body);
+    const obj = req.body;
+    
 });
 
 // 添加一个注册信息路由

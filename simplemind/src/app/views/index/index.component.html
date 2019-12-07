@@ -1,0 +1,24 @@
+<main class="container">
+  <div class="wrapper">
+    <app-pagelist [list]="pagelist" [loading]="initLoading"></app-pagelist>
+    <div class="showmore" *ngIf="hasMore">
+      <button nz-button nzType="default" (click)="showMore()">查看更多</button>
+    </div>
+  </div>
+  <aside class="aside">
+    <a class="releasebtn" routerLink="/user/release">发布文章</a>
+    <div class="tipsgroup">
+      <div class="title">
+        标签
+        <!-- <a routerLink="/user/tipsgroup" class="more">查看更多 >> </a> -->
+      </div>
+      <div class="list">
+        <a routerLink="/user/index" [ngClass]=" {'active':type === '','item':true}" style="color:#999">全部</a>
+        <ng-container *ngFor="let tips of tipsgroup; let i = index">
+          <a [routerLink]="['/user/index',tips['_id']]" [ngClass]=" {'active':type === tips['_id'],'item':true}"
+            [ngStyle]="{'background-color':tips['tcolor']}">{{tips['tname']}}</a>
+        </ng-container>
+      </div>
+    </div>
+  </aside>
+</main>

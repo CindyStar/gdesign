@@ -1,0 +1,177 @@
+/* You can add global styles to this file, and also import other style files */
+@import "assets/style/_variable";
+
+.baseInfobox {
+  padding-left: 100px;
+  text-align: center;
+  height: 100%;
+
+  input {
+    border: none;
+    box-shadow: none;
+    outline: none;
+  }
+}
+
+.release {
+  input {
+    border: none;
+    box-shadow: none;
+    outline: none;
+  } 
+
+  .ant-divider-horizontal {
+    margin: 0 !important;
+  }
+
+  .ant-select-selection {
+    border: none !important;
+  }
+
+  .ant-input:focus,
+  .ant-select-open .ant-select-selection {
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .ant-input.ng-invalid.ng-dirty,
+  .release-class.ng-invalid.ng-dirty {
+    border-bottom: 1px solid $brand;
+  }
+}
+
+.ant-comment-inner {
+  border-bottom: 1px solid $bd-lighter
+}
+
+.author-page {
+  .ant-list-item-meta-description {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .ant-list-item-meta-content,
+  .ant-list-item-meta {
+    width: 100%;
+  }
+
+  .ant-list-item {
+    cursor: pointer;
+
+    &:hover {
+      .ant-list-item-meta-title {
+        color: $brand;
+      }
+    }
+  }
+}
+
+.setting {
+  .ant-select-selection {
+    border: none;
+  }
+
+  .myarcitle {
+    text-align: left !important;
+    padding-left: 0 !important;
+  }
+
+  .ant-upload-picture-card-wrapper {
+    width: auto;
+  }
+
+  .avatar {
+    width: 128px;
+    height: 128px;
+  }
+
+  .upload-icon {
+    font-size: 32px;
+    color: #999;
+  }
+
+  .ant-upload-text {
+    margin-top: 8px;
+    color: #666;
+  }
+
+  .ant-form-item-control {
+    box-shadow: 0 1px 0 #eee;
+  }
+
+  .nbs .ant-form-item-control {
+    box-shadow: none;
+  }
+
+  .ant-tabs-content {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .ant-tabs-tabpane {
+    height: 100%;
+    overflow: auto;
+  }
+}
+
+form textarea.ant-input {
+  padding: 10px;
+}
+
+.adminlayout {
+  .logo {
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px;
+  }
+
+  nz-header {
+    background: #fff;
+    padding: 0;
+  }
+
+  nz-content {
+    margin: 0 16px;
+  }
+
+  nz-breadcrumb {
+    margin: 16px 0;
+  }
+
+  .inner-content {
+    padding: 24px;
+    background: #fff;
+    min-height: 360px;
+  }
+
+  nz-footer {
+    text-align: center;
+  }
+}
+
+.showmore {
+  padding: 20px;
+  text-align: center;
+}
+
+/* 滚动条整体部分 */
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #d0cdc7;
+}
+
+/* scroll轨道背景 */
+*::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* 滚动条中能上下移动的小块 */
+*::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
+  background-color: $brand;
+}

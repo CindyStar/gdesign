@@ -1,0 +1,108 @@
+<div class="container setting">
+  <nz-tabset nzTabPosition="left" [nzType]="'line'" style="height: 100%;">
+    <nz-tab nzTitle="基本信息">
+      <div class="baseInfobox">
+        <nz-upload class="avatar-uploader" [nzAction]="uploadUrl" nzName="uavatar" nzListType="picture-card"
+          [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload" (nzChange)="handleChange($event)">
+          <ng-container *ngIf="!avatarUrl">
+            <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+            <div class="ant-upload-text">上传头像</div>
+          </ng-container>
+          <img *ngIf="avatarUrl" [src]="global.baseUrl  + avatarUrl" class="avatar" />
+        </nz-upload>
+        <form nz-form class="setting-form" [formGroup]="baseInfoForm" (ngSubmit)="submitBaseForm()">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="8">昵称</nz-form-label>
+            <nz-form-control [nzSpan]="8" [nzValidateStatus]="unameStatus" nzHasFeedback>
+              <input formControlName="uname" style="width:100%">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="8">修改密码</nz-form-label>
+            <nz-form-control [nzSpan]="8" [nzValidateStatus]="upassworsStatus" nzHasFeedback>
+              <nz-input-group [nzSuffix]="suffixTemplate">
+                <input [type]="passwordVisible ? 'text' : 'password'" formControlName="upassword" nz-input />
+              </nz-input-group>
+              <ng-template #suffixTemplate>
+                <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                  (click)="passwordVisible = !passwordVisible"></i>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+          <div style="text-align: center">
+            <button nz-button nzType="primary" [disabled]="baseInfoSb" [nzLoading]="baseLoading">提交</button>
+          </div>
+        </form>
+      </div>
+    </nz-tab>
+    <nz-tab nzTitle="我的文章">
+      <ng-container *ngIf="pagelist.length === 0">
+        <nz-empty [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
+          <ng-template #contentTpl>
+            呀,你还没写过文章呢,快去记录你的心得吧!
+          </ng-template>
+          <ng-template #footerTpl>
+            <button nz-button nzType="primary" routerLink="/user/release">现在就去</button>
+          </ng-template>
+        </nz-empty>
+      </ng-container>
+      <app-pagelist [list]="pagelist" [loading]="initLoading" [ctrl]="true" (childEvent)="getChildEvent($event)">
+      </app-pagelist>
+      <div class="showmore" *ngIf="hasMore">
+        <button nz-button nzType="default" (click)="showMore()">查看更多</button>
+      </div>
+    </nz-tab>
+    <nz-tab nzTitle="通知列表">
+      <nz-empty nzNotFoundContent="还没有通知哦!"></nz-empty>
+    </nz-tab>
+    <!-- <nz-tab nzTitle="安全设置"></nz-tab> -->
+    <nz-tab nzTitle="意见反馈">
+      <ng-container *ngIf="cbList.length > 0">
+        <button nz-button nzType="primary" (click)="showCallback()" style="margin-bottom: 20px">提交反馈</button>
+        <br>
+        <nz-list [nzDataSource]="cbList" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" [nzLoading]="cbloading">
+          <ng-template #item let-item>
+            <nz-list-item>
+              <nz-list-item-meta [nzTitle]="item.bcontent" [nzDescription]="nzDescription">
+              </nz-list-item-meta>
+              <ng-template #nzDescription>
+                <nz-badge nzStatus="processing" [nzText]="item.breplay" *ngIf="!item.bprocess"></nz-badge>
+                <nz-badge nzStatus="success" [nzText]="item.breplay" *ngIf="item.bprocess"></nz-badge>
+              </ng-template>
+            </nz-list-item>
+          </ng-template>
+        </nz-list>
+      </ng-container>
+      <ng-container *ngIf="cbList.length === 0">
+        <nz-empty nzNotFoundContent="你还没提交过意见呢!" [nzNotFoundFooter]="cbfooterTpl">
+          <ng-template #cbfooterTpl>
+            <button nz-button nzType="primary" (click)="showCallback()">现在就去</button>
+          </ng-template>
+        </nz-empty>
+      </ng-container>
+    </nz-tab>
+  </nz-tabset>
+</div>
+
+<nz-modal [(nzVisible)]="callbackVisiable" nzTitle="提交反馈" (nzOnCancel)="handleCancel()" (nzOnOk)="submitcallbackForm()">
+  <div class="flex-center">
+    <form nz-form [formGroup]="callbackForm" style="width: 100%">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">反馈分类</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <nz-select nzShowSearch nzPlaceHolder="请选择" formControlName="btype">
+            <nz-option [nzLabel]="item.btypename" [nzValue]="item._id" *ngFor="let item of calltype"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="nbs">
+        <nz-form-label [nzSpan]="6">反馈内容</nz-form-label>
+        <nz-form-control [nzSpan]="16"
+          [nzValidateStatus]="callbackForm.get('bcontent').invalid && callbackForm.get('bcontent').dirty?'error':(callbackForm.get('bcontent').valid ? 'success':'warning')"
+          nzHasFeedback>
+          <textarea rows="8" nz-input formControlName="bcontent"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</nz-modal>

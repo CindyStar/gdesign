@@ -1,0 +1,49 @@
+<nz-table #editRowTable nzBordered [nzData]="cblist" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+  [nzLoading]="cbloading" [nzLoadingDelay]="300" (nzPageIndexChange)="showMore()">
+  <thead>
+    <tr>
+      <th nzAlign="center" nzWidth="80px">序号</th>
+      <th>分类</th>
+      <th>内容</th>
+      <th>进度</th>
+      <th>回复</th>
+      <th>头像</th>
+      <th>昵称</th>
+      <th>提交时间</th>
+      <th nzAlign="center">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of editRowTable.data index as index" class="editable-row">
+      <td nzAlign="center">{{index+1}}</td>
+      <td>{{data['btype']?data['btype']['btypename']:'空'}}</td>
+      <td>{{data.bcontent}}</td>
+      <td>
+        <nz-badge nzStatus="processing" nzText="待处理" *ngIf="!data.bprocess"></nz-badge>
+        <nz-badge nzStatus="success" nzText="已处理" *ngIf="data.bprocess"></nz-badge>
+      </td>
+      <td>{{data.breplay}}</td>
+      <td>
+        <nz-avatar nzIcon="user" [nzSrc]="global.baseUrl + data['uid']['uavatar']"></nz-avatar>
+      </td>
+      <td>{{data['uid']['uname']}}</td>
+      <td>{{data.btime | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+      <td nzAlign="center">
+        <a (click)="showModal(data)" *ngIf="!data.bprocess">回复</a>
+        <span *ngIf="data.bprocess">处理完毕</span>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="处理反馈" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <div class="flex-center">
+    <form nz-form>
+      <nz-form-item class="nbs">
+        <nz-form-control>
+          <textarea rows="8" nz-input [(ngModel)]="breplay" name="breplay"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</nz-modal>

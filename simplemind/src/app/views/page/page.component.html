@@ -1,0 +1,52 @@
+<div class="container">
+  <aside class="author-info">
+    <div class="name">
+      <nz-avatar nzIcon="user" [nzSrc]="global.baseUrl + pageInfo['uid']['uavatar']"></nz-avatar>
+      <span [routerLink]="['/user/center', pageInfo['uid']['_id']]">{{pageInfo['uid']['uname']}}</span>
+      <!-- <button nz-button nzType="primary" nzSize="small" class="follow" [nzLoading]="following"
+        (click)="follow()">+关注</button> -->
+    </div>
+    <nz-list [nzDataSource]="pageList" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" [nzLoading]="loading"
+      class="author-page">
+      <ng-template #item let-item>
+        <nz-list-item [routerLink]="['/user/page', item['_id']]">
+          <nz-list-item-meta [nzTitle]="item['atitle']" [nzDescription]="item['abstract']">
+          </nz-list-item-meta>
+        </nz-list-item>
+      </ng-template>
+    </nz-list>
+  </aside>
+  <div class="warpper">
+    <nz-skeleton [nzLoading]="loading" [nzActive]="true">
+      <div class="page-title">
+        <h1>{{pageInfo['atitle']}}</h1>
+        <span class="page-info"
+          [ngStyle]="{'background-color':pageInfo['aclass']['tcolor']}">{{pageInfo['aclass']['tname']}}</span>
+      </div>
+      <div class="page-context" [innerHtml]="pageInfo['acontent']">内容</div>
+    </nz-skeleton>
+    <nz-comment>
+      <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="global.baseUrl + user.uavatar"></nz-avatar>
+      <nz-comment-content>
+        <nz-form-item>
+          <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
+        </nz-form-item>
+        <nz-form-item>
+          <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
+            Add Comment
+          </button>
+        </nz-form-item>
+      </nz-comment-content>
+    </nz-comment>
+    <nz-list *ngIf="data.length" [nzDataSource]="data" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
+      <ng-template #item let-item>
+        <nz-comment [nzAuthor]="item.uid['uname']" [nzDatetime]="item.ctime | date : 'yyyy-MM-dd hh:mm'">
+          <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="global.baseUrl + item.uid['uavatar']"></nz-avatar>
+          <nz-comment-content>
+            <p>{{ item.ccontent }}</p>
+          </nz-comment-content>
+        </nz-comment>
+      </ng-template>
+    </nz-list>
+  </div>
+</div>

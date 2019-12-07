@@ -16,7 +16,6 @@ var comments = require('./apis/routes/comment');
 var calltypes = require('./apis/routes/calltype');
 var callbacks = require('./apis/routes/callback');
 var articles = require('./apis/routes/article');
-var login = require('./apis/routes/login');
 
 app.use('/apis/', users);
 app.use('/apis/', types);
@@ -24,10 +23,10 @@ app.use('/apis/', comments);
 app.use('/apis/', calltypes);
 app.use('/apis/', callbacks);
 app.use('/apis/', articles);
-app.use('/apis/', login);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+app.use('/public', express.static('public'));
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -1,0 +1,36 @@
+<nz-table #editRowTable nzBordered [nzData]="pagelist" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+  [nzLoading]="initLoading" [nzLoadingDelay]="300" (nzPageIndexChange)="showMore()">
+  <thead>
+    <tr>
+      <th nzAlign="center" nzWidth="80px">序号</th>
+      <th>标题</th>
+      <th>内容</th>
+      <th>发表时间</th>
+      <th>所属类别</th>
+      <th nzAlign="center">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of pagelist index as index" class="editable-row">
+      <td nzAlign="center">{{index+1}}</td>
+      <td>{{data.atitle}}</td>
+      <td>{{data.abstract.substr(0,60)}}...</td>
+      <td>{{ data.astartime | date : 'yyyy-MM-dd'}}</td>
+      <td>{{ data.aclass['tname'] }}</td>
+      <td nzAlign="center">
+        <a [routerLink]="['/user/page',data._id]">查看</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzTitle="Sure to delete?" (nzOnConfirm)="delete(data._id)">删除</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<!-- <div class="editable-cell" *ngIf="editId !== data.id; else editTpl">
+  <div class="editable-cell-value-wrap" (click)="startEdit(data.id, $event)">
+    {{ data.name }}
+  </div>
+</div>
+<ng-template #editTpl>
+  <input type="text" nz-input [(ngModel)]="data.name" />
+</ng-template> -->

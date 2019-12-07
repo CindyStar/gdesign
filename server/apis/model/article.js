@@ -15,6 +15,10 @@ const articleSchema = mongoose.Schema({
         type: String,
         require: true
     }, // 文章内容
+    markdown: {
+        type: String,
+        require: true
+    },
     uid: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',

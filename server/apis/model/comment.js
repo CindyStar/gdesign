@@ -4,7 +4,10 @@ const mongoose = require('mongoose')
 //定义数据模型，可以看到，我们下面创建了一个表，
 const commentSchema = mongoose.Schema({
     ccontent: String, // 评论内容
-    ctime: Date, // 评论时间
+    ctime: {
+        type: Date,
+        default: Date.now
+    }, // 评论时间
     aid: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'article',

@@ -1,0 +1,29 @@
+@import "_reset";
+@import "_variable";
+
+.html,
+.body {
+  background-color: #f5f5f5;
+}
+
+
+.container {
+  width: $wrapper-width;
+  margin: auto;
+}
+
+
+.flex-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.more {
+  color: #999;
+  font-size: 12px;
+}
+
+a:hover {
+  text-decoration: none;
+}

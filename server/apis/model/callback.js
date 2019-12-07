@@ -8,12 +8,31 @@ const callbackSchema = mongoose.Schema({
         ref: 'user',
         require: true
     }, // 反馈用户
-    bcontent: String, // 反馈内容
-    btype: Number, // 所属类别
-    bprocess: Number, // 处理进度
-    breplay: String, // 回复内容
-    bretime: Date, // 回复时间
-    btime: Date // 提交时间
+    bcontent: {
+        type: String,
+        require: true
+    }, // 反馈内容
+    btype: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'calltype',
+        require: true
+    }, // 所属类别
+    bprocess: {
+        type: Number,
+        default: 0
+    }, // 处理进度
+    breplay: {
+        type: String,
+        default: '待回复'
+    }, // 回复内容
+    bretime: {
+        type: Date,
+        default: Date.now
+    }, // 回复时间
+    btime: {
+        type: Date,
+        default: Date.now
+    } // 提交时间
 }, {
     collection: 'callback'
 })

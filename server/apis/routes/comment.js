@@ -1,5 +1,11 @@
 //引入express模块
 const express = require("express");
+const mongoose = require('mongoose');
+var bodyParser = require("body-parser");
+var jsonParser = bodyParser.json();
+var urlencodedParser = bodyParser.urlencoded({
+    extended: false
+});
 //定义路由级中间件
 const router = express.Router();
 //引入数据模型模块
@@ -8,9 +14,6 @@ const comment = require("../model/comment");
 // 查询所有英雄信息路由
 router.get("/comment", (req, res) => {
     comment.find({})
-        .sort({
-            update_at: -1
-        })
         .then(comments => {
             res.json(comments);
         })
@@ -22,23 +25,45 @@ router.get("/comment", (req, res) => {
 
 // 通过ObjectId查询单个英雄信息路由
 router.get("/comment/:id", (req, res) => {
-    comment.findById(req.params.id)
-        .then(comment => {
-            res.json(comment);
-        })
-        .catch(err => {
-            res.json(err);
-        });
+    let obj = {
+        code: 200,
+        data: null,
+        error: false
+    }
+    comment.find({
+        aid: req.params.id
+    }).populate({
+        path: 'uid',
+        select: 'uname -_id uavatar'
+    }).sort({
+        ctime: -1
+    }).then(comments => {
+        obj.data = comments;
+        res.json(obj);
+    }).catch(err => {
+        obj.code = 500;
+        obj.data = err;
+        obj.error = true;
+        res.json(obj);
+    });
 });
 
 // 添加一个英雄信息路由
-router.post("/comment", (req, res) => {
+router.post("/comment", urlencodedParser, (req, res) => {
+    let obj = {
+        code: 200,
+        data: null,
+        error: false
+    }
     //使用comment model上的create方法储存数据
-    comment.create(req.query, (err, comment) => {
+    comment.create(req.body, (err, datas) => {
         if (err) {
-            res.json(err);
+            obj.code = 500;
+            obj.data = err;
+            obj.error = true;
+            res.json(obj);
         } else {
-            res.json(comment);
+            res.json(obj);
         }
     });
 });
